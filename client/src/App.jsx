@@ -8,6 +8,10 @@ const socket = io(import.meta.env.VITE_SERVER_URL, { //reads URL from my .env fi
   }
 });  
 
+const laughAudio = new Audio('/laughtrack.mp3');
+const booAudio = new Audio('/boo.mp3');
+const lebronAudio = new Audio('/lebraudio.mp3');
+
 function App() {
   const [serverConnected, setServerConnected] = useState(false); // are we connected to the server
   const [obsConnected, setObsConnected] = useState(false);       // are we connected to OBS
@@ -22,21 +26,18 @@ function App() {
     socket.on('lebron:state', (value) => setLebronMode(value));
 
     socket.on('twitch:bang', () => {
-      const audio = new Audio('/lebraudio.mp3');
-      audio.play()
-        .catch(err => console.error('Audio error:', err));
+      lebronAudio.currentTime = 0;
+      lebronAudio.play().catch(err => console.error(err));
     });
 
     socket.on('reward:laugh', () => {
-      const audio = new Audio('/laughtrack.mp3');
-      audio.play()
-        .catch(err => console.error('Audio error:', err));
+      laughAudio.currentTime = 0;
+      laughAudio.play().catch(err => console.error(err));
     });
 
-        socket.on('reward:boo', () => {
-      const audio = new Audio('/boo.mp3');
-      audio.play()
-        .catch(err => console.error('Audio error:', err));
+    socket.on('reward:boo', () => {
+      booAudio.currentTime = 0;
+      booAudio.play().catch(err => console.error(err));
     });
 
     return () => {    //removes listeners when we unload the component
