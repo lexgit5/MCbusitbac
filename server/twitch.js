@@ -23,12 +23,12 @@ export function startTwitch(io, getLebronMode) {
   twitchClient.on('message', (channel, tags, message, self) => {
     if (message.trim() === 'BANG' && getLebronMode() && !lebronCooldown) {
       lebronCooldown = true;
-      console.log('Cooldown started, will reset in', 0.5 * 60 * 1000, 'ms');
+      console.log('Cooldown started, will reset in', 5 * 60 * 1000, 'ms');
       io.emit('twitch:bang');
       setTimeout(() => {
         lebronCooldown = false;
         console.log('Cooldown over');
-      }, 0.5 * 60 * 1000); // 5 minutes
+      }, 5 * 60 * 1000); // 5 minutes
     }
   });
 }

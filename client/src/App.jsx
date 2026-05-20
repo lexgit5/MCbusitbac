@@ -27,10 +27,24 @@ function App() {
         .catch(err => console.error('Audio error:', err));
     });
 
+    socket.on('reward:laugh', () => {
+      const audio = new Audio('/laughtrack.mp3');
+      audio.play()
+        .catch(err => console.error('Audio error:', err));
+    });
+
+        socket.on('reward:boo', () => {
+      const audio = new Audio('/boo.mp3');
+      audio.play()
+        .catch(err => console.error('Audio error:', err));
+    });
+
     return () => {    //removes listeners when we unload the component
       socket.off('connect');
       socket.off('disconnect');
       socket.off('obs:status');
+      socket.off('reward:laugh'); //laugh audio
+      socket.off('reward:boo');   // boo audio
       socket.off('twitch:bang'); //lebron thing
       socket.off('lebron:state');
     };

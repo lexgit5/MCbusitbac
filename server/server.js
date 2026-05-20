@@ -4,6 +4,7 @@ import { Server } from 'socket.io';
 import OBSWebSocket from 'obs-websocket-js';
 import dotenv from 'dotenv';
 import { startTwitch } from './twitch.js';
+import { startRewards } from './rewards.js';
 
 dotenv.config();
 
@@ -77,7 +78,8 @@ io.on('connection', (socket) => {
 
 connectToOBS(); //starts the attempt to connect to obs
 
-startTwitch(io, () => lebronMode);
+startTwitch(io, () => lebronMode);    //starts my chat reading which looks for BANG
+startRewards(io, app);         //starts my channel point reward monitoring
 
 const PORT = process.env.PORT || 3001; //checks env file or uses port 3001
 httpServer.listen(PORT, () => {
