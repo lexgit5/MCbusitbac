@@ -73,8 +73,8 @@ function App() {
           checked={lebronMode}
           onChange={(e) => socket.emit('lebron:toggle', e.target.checked)}
         />
-        <button>
-          onClick={(e) => socket.emit("blink-sound", {clip: "blinkReal"})}
+        <button
+          onClick={(e) => socket.emit("blink-sound", {clip: "blinkReal"})}>
           Blink Sound
         </button>
       </div>
