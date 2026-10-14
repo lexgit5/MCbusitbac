@@ -1,0 +1,12 @@
+{
+  "accessToken": "nmevc1ihl6gr1t0898no85tfpykx4k",
+  "refreshToken": "8mxbhkocqhb9o9rjtq0hpibrgdwc5kfi83anbtsozd6b4zwvih",
+  "scope": [
+    "channel:manage:redemptions",
+    "channel:read:redemptions",
+    "chat:edit",
+    "chat:read"
+  ],
+  "expiresIn": 15731,
+  "obtainmentTimestamp": 1791859043734
+}

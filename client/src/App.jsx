@@ -11,6 +11,9 @@ const socket = io(import.meta.env.VITE_SERVER_URL, { //reads URL from my .env fi
 const laughAudio = new Audio('/laughtrack.mp3');
 const booAudio = new Audio('/boo.mp3');
 const lebronAudio = new Audio('/lebraudio.mp3');
+const blink1 = new Audio('/blink1.mp3');
+const blink2 = new Audio('/blink2.mp3');
+
 
 function App() {
   const [serverConnected, setServerConnected] = useState(false); // are we connected to the server
@@ -40,6 +43,10 @@ function App() {
       booAudio.play().catch(err => console.error(err));
     });
 
+    socket.on("blink-sound", ({ clip }) => {
+      new Audio(`/${clip}.mp3`).play();
+    });
+
     return () => {    //removes listeners when we unload the component
       socket.off('connect');
       socket.off('disconnect');
@@ -48,6 +55,7 @@ function App() {
       socket.off('reward:boo');   // boo audio
       socket.off('twitch:bang'); //lebron thing
       socket.off('lebron:state');
+      socket.off('blink-sound');
     };
   }, []);
 
@@ -65,6 +73,10 @@ function App() {
           checked={lebronMode}
           onChange={(e) => socket.emit('lebron:toggle', e.target.checked)}
         />
+        <button>
+          onClick={(e) => socket.emit("blink-sound", {clip: "blinkReal"})}
+          Blink Sound
+        </button>
       </div>
     </div>
   );

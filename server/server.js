@@ -71,6 +71,10 @@ io.on('connection', (socket) => {
     console.log('Lebron mode:', lebronMode);
   });
 
+  socket.on('blink-sound', (data) => {
+    io.emit("blink-sound", data);
+  });
+
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);
   });

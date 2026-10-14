@@ -8,7 +8,7 @@ export function startRewards(io, app) {
       process.env.TWITCH_CLIENT_SECRET
   );
 
-  const apiClient = new ApiClient({ authProvider });    //provide said passwords to twitch
+  const apiClient = new ApiClient({ authProvider });
 
   const middleware = new EventSubMiddleware({
     apiClient,
