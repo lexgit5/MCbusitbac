@@ -5,6 +5,7 @@ import { ChatClient } from '@twurple/chat';
 const TOKEN_FILE = './twitch-chat-tokens.json';
 
 let lebronCooldown = false;
+let laughCooldown = false;
 
 export async function startTwitch(io, getLebronMode) {
   const authProvider = new RefreshingAuthProvider({
@@ -53,6 +54,18 @@ export async function startTwitch(io, getLebronMode) {
       io.emit('twitch:bang');
       setTimeout(() => {
         lebronCooldown = false;
+        console.log('Cooldown over');
+      }, 5 * 60 * 1000); // 5 minutes
+    }
+  });
+
+    chatClient.onMessage((channel, user, text) => {
+    if (text.trim() === 'LOL' && getLebronMode() && !laughCooldown) {
+      laughCooldown = true;
+      console.log('Cooldown started, will reset in', 5 * 60 * 1000, 'ms');
+      io.emit('twitch:lol');
+      setTimeout(() => {
+        laughCooldown = false;
         console.log('Cooldown over');
       }, 5 * 60 * 1000); // 5 minutes
     }

@@ -11,9 +11,6 @@ const socket = io(import.meta.env.VITE_SERVER_URL, { //reads URL from my .env fi
 const laughAudio = new Audio('/laughtrack.mp3');
 const booAudio = new Audio('/boo.mp3');
 const lebronAudio = new Audio('/lebraudio.mp3');
-const blink1 = new Audio('/blink1.mp3');
-const blink2 = new Audio('/blink2.mp3');
-
 
 function App() {
   const [serverConnected, setServerConnected] = useState(false); // are we connected to the server
@@ -31,6 +28,11 @@ function App() {
     socket.on('twitch:bang', () => {
       lebronAudio.currentTime = 0;
       lebronAudio.play().catch(err => console.error(err));
+    });
+
+    socket.on('twitch:lol', () => {
+      laughAudio.currentTime = 0;
+      laughAudio.play().catch(err => console.error(err));
     });
 
     socket.on('reward:laugh', () => {
@@ -51,6 +53,7 @@ function App() {
       socket.off('connect');
       socket.off('disconnect');
       socket.off('obs:status');
+      socket.off('twitch:lol'); 
       socket.off('reward:laugh'); //laugh audio
       socket.off('reward:boo');   // boo audio
       socket.off('twitch:bang'); //lebron thing
